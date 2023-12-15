@@ -1,0 +1,5 @@
+/.esphome/
+/secrets.yaml
+/.venv
+/.direnv
+/.mypy_cache
