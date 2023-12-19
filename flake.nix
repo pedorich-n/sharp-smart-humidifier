@@ -10,30 +10,26 @@
 
     perSystem = { system, pkgs, lib, ... }: {
       devShells = {
-        default =
-          pkgs.mkShell {
-            nativeBuildInputs = (with pkgs; [
-              bashInteractive
-              poetry
-            ]) ++ (with pkgs.python3Packages; [
-              argcomplete
-              venvShellHook
-            ]);
+        default = pkgs.mkShell {
+          nativeBuildInputs = with pkgs; [ 
+            bashInteractive 
+            python3
+            platformio-core
+            platformio
+            esphome
+            python3Packages.argcomplete
+          ];
 
-            venvDir = "./.venv";
+          shellHook = ''
+            ${lib.getExe pkgs.python3} --version
+            ${lib.getExe' pkgs.platformio-core "platformio"} --version
+            echo "ESPHome $(${lib.getExe pkgs.esphome} version)"
 
-            postVenvCreation = ''
-              unset SOURCE_DATE_EPOCH
-
-              poetry env use .venv/bin/python
-              poetry install --no-root
-            '';
-
-            postShellHook = ''
-              eval "$(register-python-argcomplete esphome)"
-              poetry env info
-            '';
-          };
+            eval "$(_PLATFORMIO_COMPLETE=bash_source ${lib.getExe' pkgs.platformio-core "platformio"})"
+            eval "$(_PIO_COMPLETE=bash_source ${lib.getExe' pkgs.platformio-core "pio"})"
+            eval "$(register-python-argcomplete ${lib.getExe pkgs.esphome})"
+          '';
+        };
       };
     };
   };
