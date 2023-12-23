@@ -1,0 +1,64 @@
+substitutions:
+  git_hash: undefined
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: true
+  power_save_mode: none
+
+  # ap:
+  #   ssid: ${friendly_name} Fallback AP
+  #   password: !secret wifi_ap_password
+
+ota:
+  safe_mode: true
+  port: 3232
+  password: !secret ota_password
+
+# captive_portal:
+
+debug:
+  update_interval: 5s
+
+button:
+  - platform: safe_mode
+    name: "Restart in Safe Mode"
+    disabled_by_default: true
+    icon: "mdi:restart-alert"
+
+  - platform: restart
+    name: "Restart"
+    disabled_by_default: true
+    icon: "mdi:restart"
+
+sensor:
+  - platform: debug
+    free:
+      name: "Heap Free"
+    loop_time:
+      name: "Loop Time"
+
+  - platform: uptime
+    update_interval: 5s
+    name: Uptime Sensor
+
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 10s
+
+text_sensor:
+  - platform: debug
+    reset_reason:
+      name: "Reset Reason"
+
+  - platform: version
+    name: "ESPHome Version"
+    hide_timestamp: true
+
+  - platform: template
+    name: "Git Hash"
+    icon: "mdi:git"
+    entity_category: "diagnostic"
+    lambda: |-
+      return {"${git_hash}"};
