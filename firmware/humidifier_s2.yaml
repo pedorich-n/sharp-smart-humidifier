@@ -1,0 +1,125 @@
+esphome:
+  name: humidifier-s2
+  friendly_name: "Sharp HV-R75"
+  # platformio_options:
+  # platform: platformio/espressif32@6.4.0
+
+external_components:
+  - source:
+      type: local
+      path: esphome_components/
+    components:
+      [
+        "sharp_hv_r75_common",
+        "sharp_hv_r75_operating_mode",
+        "sharp_hv_r75_operating_mode_select",
+        "sharp_hv_r75_operating_mode_control",
+        "sharp_hv_r75_water_level",
+      ]
+
+esp32:
+  board: lolin_s2_mini
+  variant: esp32s2
+  framework:
+    type: esp-idf
+    version: recommended
+    sdkconfig_options:
+      CONFIG_ESP_INT_WDT: n # https://github.com/espressif/esp-idf/issues/8184#issuecomment-1526878804
+      CONFIG_ESP_TASK_WDT_EN: n
+      CONFIG_ESP_CONSOLE_USB_CDC: y
+
+light:
+  - platform: status_led
+    name: "Status"
+    internal: true
+    pin:
+      number: GPIO15
+      inverted: true
+
+# web_server:
+#   port: 80
+
+mqtt:
+  broker: !secret mqtt_broker
+  port: 1883
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  discovery: true
+  topic_prefix: humidifier
+
+logger:
+  level: INFO
+
+packages:
+  base: !include { file: .base.yaml }
+
+  led3: !include { file: .led_sensor.yaml, vars: { led: 3, pin: 5 } } # Mode Auto
+  led4: !include { file: .led_sensor.yaml, vars: { led: 4, pin: 38 } } # Mode Night
+  led5: !include { file: .led_sensor.yaml, vars: { led: 5, pin: 6 } } # Mode Eco
+  led2: !include { file: .led_sensor.yaml, vars: { led: 2, pin: 36 } } # Mode Slow
+  led13: !include { file: .led_sensor.yaml, vars: { led: 13, pin: 39 } } # Mode Fast
+  led6: !include { file: .led_sensor.yaml, vars: { led: 6, pin: 34 } } # Mode Ion
+
+  led14: !include { file: .led_sensor.yaml, vars: { led: 14, pin: 37 } } # Bucket Empty
+  led15: !include { file: .led_sensor.yaml, vars: { led: 15, pin: 33 } } # Bucket 25%
+  led16: !include { file: .led_sensor.yaml, vars: { led: 16, pin: 35 } } # Bucket 50%
+  led9: !include { file: .led_sensor.yaml, vars: { led: 9, pin: 8 } } # Bucket Full
+
+output:
+  - platform: gpio
+    pin: 3
+    id: out_sw1
+  - platform: gpio
+    pin: 40
+    id: out_sw2
+
+button:
+  - platform: output
+    id: btn_on_off
+    name: "On/Off Switch"
+    output: out_sw1
+    duration: 150ms
+    disabled_by_default: true
+    icon: "mdi:power"
+  - platform: output
+    id: btn_mode
+    name: "Mode Switch"
+    output: out_sw2
+    duration: 150ms
+    disabled_by_default: true
+    icon: "mdi:fan"
+
+select:
+sharp_hv_r75_common:
+
+sharp_hv_r75_operating_mode:
+  id: sharp_hv_r75_current_mode
+  name: "Operating Mode"
+  update_interval: 1s
+  detections_before_publish: 2
+  sensor_mode_auto: led_3_sensor
+  sensor_mode_night: led_4_sensor
+  sensor_mode_eco: led_5_sensor
+  sensor_mode_fan_slow: led_2_sensor
+  sensor_mode_fan_fast: led_13_sensor
+  sensor_ion: led_6_sensor
+
+sharp_hv_r75_operating_mode_select:
+  id: sharp_hv_r75_operating_mode_selector
+  name: "Operating Mode Select"
+
+sharp_hv_r75_operating_mode_control:
+  update_interval: 2s
+  sensor_operating_mode: sharp_hv_r75_current_mode
+  select_operating_mode: sharp_hv_r75_operating_mode_selector
+  button_on_off: btn_on_off
+  button_mode: btn_mode
+
+sharp_hv_r75_water_level:
+  name: "Water Level"
+  update_interval: 1s
+  detections_before_publish: 2
+  sensor_bucket_empty: led_14_sensor
+  sensor_bucket_low: led_15_sensor
+  sensor_bucket_mid: led_16_sensor
+  sensor_bucket_full: led_9_sensor
