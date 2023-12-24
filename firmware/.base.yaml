@@ -1,5 +1,5 @@
 substitutions:
-  git_hash: undefined
+  git_rev: undefined
 
 wifi:
   ssid: !secret wifi_ssid
@@ -61,4 +61,4 @@ text_sensor:
     icon: "mdi:git"
     entity_category: "diagnostic"
     lambda: |-
-      return {"${git_hash}"};
+      return {"${git_rev}"};

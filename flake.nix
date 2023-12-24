@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "nixpkgs/nixpkgs-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
     systems.url = "github:nix-systems/default";
 
@@ -22,16 +22,19 @@
           nativeBuildInputs = with pkgs; [
             bashInteractive
             git
+            just
             python3
+            python3Packages.argcomplete
+
+            esphome
             platformio-core
             platformio
-            esphome
-            python3Packages.argcomplete
           ];
 
           shellHook = ''
+            export INSIDE_NIX_DEVELOP=true
             ${lib.getExe pkgs.python3} --version
-            ${lib.getExe' pkgs.platformio-core "platformio"} --version
+            ${lib.getExe pkgs.platformio-core} --version
             echo "ESPHome $(${lib.getExe pkgs.esphome} version)"
 
             eval "$(register-python-argcomplete esphome)"

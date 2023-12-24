@@ -4,3 +4,4 @@
 /.direnv
 /.mypy_cache
 */secrets.yaml
+.vscode
