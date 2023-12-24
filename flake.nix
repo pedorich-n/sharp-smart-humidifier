@@ -33,6 +33,8 @@
 
           shellHook = ''
             export INSIDE_NIX_DEVELOP=true
+            export ESPHOME_NOGITIGNORE=true
+
             ${lib.getExe pkgs.python3} --version
             ${lib.getExe pkgs.platformio-core} --version
             echo "ESPHome $(${lib.getExe pkgs.esphome} version)"

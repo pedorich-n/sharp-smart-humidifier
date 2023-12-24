@@ -8,11 +8,17 @@ git_rev_substitution := replace('--substitution "git_rev" "%GIT_REV%"', '%GIT_RE
 dev:
     nix develop
 
+config:
+    {{ replace(esphome_command, '%CMD%', git_rev_substitution + ' config') }}
+
 compile:
     {{ replace(esphome_command, '%CMD%', git_rev_substitution + ' compile') }}
 
 run:
     {{ replace(esphome_command, '%CMD%', git_rev_substitution + ' run') }}
+
+clean:
+    {{ replace(esphome_command, '%CMD%', 'clean') }}
 
 clean-mqtt:
     {{ replace(esphome_command, '%CMD%', 'clean-mqtt') }}

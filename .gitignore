@@ -1,7 +1,6 @@
-/.esphome/
-/secrets.yaml
+*/.esphome/
+*/secrets.yaml
 /.venv
 /.direnv
 /.mypy_cache
-*/secrets.yaml
 .vscode
