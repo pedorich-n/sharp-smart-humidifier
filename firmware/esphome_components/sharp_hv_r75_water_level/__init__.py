@@ -1,7 +1,7 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import sensor
-from esphome.const import ICON_WATER, STATE_CLASS_MEASUREMENT, UNIT_PERCENT
+from esphome.const import STATE_CLASS_MEASUREMENT, UNIT_PERCENT
 
 from esphome.components.sharp_hv_r75_common import DutyCycleSensor, sharp_hv_r75_ns
 
@@ -20,7 +20,7 @@ CONFIG_SCHEMA = (
     sensor.sensor_schema(
         WaterLevelSensor,
         unit_of_measurement=UNIT_PERCENT,
-        icon=ICON_WATER,
+        icon="mdi:cup-water",
         accuracy_decimals=0,
         state_class=STATE_CLASS_MEASUREMENT,
     )

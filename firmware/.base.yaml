@@ -24,12 +24,10 @@ debug:
 button:
   - platform: safe_mode
     name: "Restart in Safe Mode"
-    disabled_by_default: true
     icon: "mdi:restart-alert"
 
   - platform: restart
     name: "Restart"
-    disabled_by_default: true
     icon: "mdi:restart"
 
 sensor:

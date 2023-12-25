@@ -79,7 +79,6 @@ button:
     name: "On/Off Switch"
     output: out_sw1
     duration: 150ms
-    disabled_by_default: true
     icon: "mdi:power"
   - platform: output
     id: btn_mode
