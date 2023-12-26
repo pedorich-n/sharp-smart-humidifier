@@ -11,12 +11,16 @@ wifi:
   #   ssid: ${friendly_name} Fallback AP
   #   password: !secret wifi_ap_password
 
+# captive_portal:
+
+# AP and/or Captive portal causes random reboots on this board :(
+# See: https://github.com/esphome/issues/issues/1679
+#      https://community.home-assistant.io/t/cant-stop-esphome-restarting-with-weak-wifi/453821/21
+
 ota:
   safe_mode: true
   port: 3232
   password: !secret ota_password
-
-# captive_portal:
 
 debug:
   update_interval: 5s

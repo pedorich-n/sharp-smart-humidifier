@@ -1,10 +1,11 @@
-#Expected ${led} to substitute for LED number
-#Expected ${pin} to substitute for the gpio pin
+# Expected ${led} to substitute for LED number
+# Expected ${pin} to substitute for the gpio pin
+# Expected ${update_interval} to substitute for the update_interval
 sensor:
 - platform: duty_cycle
   name: "LED${led}"
   id: led_${led}_sensor
-  update_interval: 1s
+  update_interval: ${update_interval}
   internal: true
   pin:
     number: ${pin}

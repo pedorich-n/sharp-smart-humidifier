@@ -1,8 +1,6 @@
 esphome:
   name: humidifier-s2
   friendly_name: "Sharp HV-R75"
-  # platformio_options:
-  # platform: platformio/espressif32@6.4.0
 
 external_components:
   - source:
@@ -53,24 +51,24 @@ logger:
 packages:
   base: !include { file: .base.yaml }
 
-  led3: !include { file: .led_sensor.yaml, vars: { led: 3, pin: 5 } } # Mode Auto
-  led4: !include { file: .led_sensor.yaml, vars: { led: 4, pin: 38 } } # Mode Night
-  led5: !include { file: .led_sensor.yaml, vars: { led: 5, pin: 6 } } # Mode Eco
-  led2: !include { file: .led_sensor.yaml, vars: { led: 2, pin: 36 } } # Mode Slow
-  led13: !include { file: .led_sensor.yaml, vars: { led: 13, pin: 39 } } # Mode Fast
-  led6: !include { file: .led_sensor.yaml, vars: { led: 6, pin: 34 } } # Mode Ion
+  led3: !include { file: .led_sensor.yaml, vars: { led: 3, pin: 5, update_interval: 0.3s } } # Mode Auto
+  led4: !include { file: .led_sensor.yaml, vars: { led: 4, pin: 38, update_interval: 0.3s } } # Mode Night
+  led5: !include { file: .led_sensor.yaml, vars: { led: 5, pin: 6, update_interval: 0.3s } } # Mode Eco
+  led2: !include { file: .led_sensor.yaml, vars: { led: 2, pin: 36, update_interval: 0.3s } } # Mode Slow
+  led13: !include { file: .led_sensor.yaml, vars: { led: 13, pin: 39, update_interval: 0.3s } } # Mode Fast
+  led6: !include { file: .led_sensor.yaml, vars: { led: 6, pin: 34, update_interval: 0.3s } } # Mode Ion
 
-  led14: !include { file: .led_sensor.yaml, vars: { led: 14, pin: 37 } } # Bucket Empty
-  led15: !include { file: .led_sensor.yaml, vars: { led: 15, pin: 33 } } # Bucket 25%
-  led16: !include { file: .led_sensor.yaml, vars: { led: 16, pin: 35 } } # Bucket 50%
-  led9: !include { file: .led_sensor.yaml, vars: { led: 9, pin: 8 } } # Bucket Full
+  led14: !include { file: .led_sensor.yaml, vars: { led: 14, pin: 37, update_interval: 1s } } # Bucket Empty
+  led15: !include { file: .led_sensor.yaml, vars: { led: 15, pin: 33, update_interval: 1s } } # Bucket 25%
+  led16: !include { file: .led_sensor.yaml, vars: { led: 16, pin: 35, update_interval: 1s } } # Bucket 50%
+  led9: !include { file: .led_sensor.yaml, vars: { led: 9, pin: 8, update_interval: 1s } } # Bucket Full
 
 output:
   - platform: gpio
-    pin: 3
+    pin: GPIO3
     id: out_sw1
   - platform: gpio
-    pin: 40
+    pin: GPIO40
     id: out_sw2
 
 button:
@@ -94,7 +92,7 @@ sharp_hv_r75_common:
 sharp_hv_r75_operating_mode:
   id: sharp_hv_r75_current_mode
   name: "Operating Mode"
-  update_interval: 1s
+  update_interval: 0.5s
   detections_before_publish: 2
   sensor_mode_auto: led_3_sensor
   sensor_mode_night: led_4_sensor
