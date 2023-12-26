@@ -36,13 +36,11 @@ button:
 
 sensor:
   - platform: debug
-    free:
-      name: "Heap Free"
     loop_time:
       name: "Loop Time"
 
   - platform: uptime
-    update_interval: 5s
+    update_interval: 60s
     name: Uptime Sensor
 
   - platform: wifi_signal
@@ -59,8 +57,8 @@ text_sensor:
     hide_timestamp: true
 
   - platform: template
-    name: "Git Hash"
-    icon: "mdi:git"
+    name: "Git Rev"
+    icon: "mdi:source-repository"
     entity_category: "diagnostic"
     lambda: |-
       return {"${git_rev}"};
