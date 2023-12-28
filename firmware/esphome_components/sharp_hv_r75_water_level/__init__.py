@@ -1,9 +1,8 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import sensor
-from esphome.const import STATE_CLASS_MEASUREMENT, UNIT_PERCENT
-
 from esphome.components.sharp_hv_r75_common import DutyCycleSensor, sharp_hv_r75_ns
+from esphome.const import STATE_CLASS_MEASUREMENT, UNIT_PERCENT
 
 CONF_LED_BUCKET_EMPTY = "sensor_bucket_empty"
 CONF_LED_BUCKET_LOW = "sensor_bucket_low"

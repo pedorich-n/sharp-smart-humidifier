@@ -1,9 +1,8 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
-from esphome.components import text_sensor, sensor
-from esphome.const import ENTITY_CATEGORY_DIAGNOSTIC, CONF_ID
-
-# from esphome.components.sharp_hv_r75_common import sharp_hv_r75_ns
+from esphome.components import sensor, text_sensor
+from esphome.components.sharp_hv_r75_common import DutyCycleSensor, sharp_hv_r75_ns
+from esphome.const import CONF_ID, ENTITY_CATEGORY_DIAGNOSTIC
 
 CONF_LED_MODE_AUTO = "sensor_mode_auto"
 CONF_LED_MODE_NIGHT = "sensor_mode_night"
@@ -15,10 +14,6 @@ CONF_LED_ION = "sensor_ion"
 CONF_MAX_MODE_DETECTION_ATTEMPTS = "max_mode_detection_attempts"
 CONF_DETECTIONS_BEFORE_PUBLISH = "detections_before_publish"
 
-duty_cycle_ns = cg.esphome_ns.namespace("duty_cycle")
-DutyCycleSensor = duty_cycle_ns.class_("DutyCycleSensor", sensor.Sensor, cg.PollingComponent)
-
-sharp_hv_r75_ns = cg.esphome_ns.namespace("sharp_hv_r75")
 operating_mode_ns = sharp_hv_r75_ns.namespace("operating_mode")
 OperatingMode = operating_mode_ns.class_("SharpHVR75OperatingMode", text_sensor.TextSensor, cg.PollingComponent)
 

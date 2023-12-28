@@ -1,6 +1,6 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
-from esphome.components import select, text_sensor, button
+from esphome.components import button, select, text_sensor
 from esphome.components.sharp_hv_r75_common import sharp_hv_r75_ns
 from esphome.const import CONF_ID
 
@@ -44,7 +44,6 @@ async def to_code(config):
 
     button_on_off = await cg.get_variable(config[CONF_BUTTON_ON_OFF])
     cg.add(var.set_on_off_button(button_on_off))
-
 
     button_mode = await cg.get_variable(config[CONF_BUTTON_MODE])
     cg.add(var.set_mode_select_button(button_mode))

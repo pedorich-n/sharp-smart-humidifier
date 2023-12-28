@@ -8,7 +8,6 @@
 #include "esphome/components/text_sensor/text_sensor.h"
 #include "esphome/components/duty_cycle/duty_cycle_sensor.h"
 
-// TODO: don't use relative path?
 #include "esphome/components/sharp_hv_r75_common/common.h"
 
 namespace esphome {

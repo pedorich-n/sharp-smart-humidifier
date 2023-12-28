@@ -4,7 +4,6 @@ from esphome.components import select
 from esphome.components.sharp_hv_r75_common import sharp_hv_r75_ns
 from esphome.const import ENTITY_CATEGORY_CONFIG, ICON_FAN
 
-
 operating_mode_select_ns = sharp_hv_r75_ns.namespace("operating_mode_select")
 OperatingModeSelect = operating_mode_select_ns.class_("SharpHVR75OperatingModeSelect", select.Select, cg.Component)
 

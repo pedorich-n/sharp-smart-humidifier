@@ -11,6 +11,8 @@
 namespace esphome {
 namespace sharp_hv_r75 {
 
+// Dummy component, just to trick esphome into adding this header to the firmware files
+// to make it available for other components
 class SharpHVR75CommonComponent : public Component {
  public:
   void setup() override { return; };
@@ -24,7 +26,6 @@ struct StatusLedValueStore {
 
   bool is_active() { return value >= detection_threshold_; };
 
-  // TODO: figure out struct initialization
   static StatusLedValueStore from_sensor(duty_cycle::DutyCycleSensor *sensor, float detection_threshold = 1.0) {
     StatusLedValueStore result;
     result.value = sensor->get_state();

@@ -49,7 +49,7 @@ void SharpHVR75WaterLevelSensor::update() {
       return;
     }
 
-    if (this->last_published_level_.has_value() && this->last_published_level_ ==detected_level) {
+    if (this->last_published_level_.has_value() && this->last_published_level_ == detected_level) {
       ESP_LOGD(TAG, "Level hasn't changed since last update, skipping publish_state...");
       return;
     }

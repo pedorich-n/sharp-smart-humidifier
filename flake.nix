@@ -48,26 +48,39 @@
         projectRootFile = ".root";
         flakeCheck = true;
 
-        settings.formatter.just = {
-          command = pkgs.just;
-          options = [
-            "--fmt"
-            "--unstable"
-            "--justfile"
-          ];
-          includes = [ "justfile" ];
+        settings.formatter = {
+          just = {
+            command = pkgs.just;
+            options = [
+              "--fmt"
+              "--unstable"
+              "--justfile"
+            ];
+            includes = [ "justfile" ];
+          };
+
+          black.options = [ "--line-length=120" ];
         };
 
         programs = {
           # Nix
           nixpkgs-fmt.enable = true;
 
-          # Other
+          # C++
+          clang-format.enable = true;
+
+          # Python
+          black.enable = true;
+          isort = {
+            enable = true;
+            profile = "black";
+          };
+
+          # YAML, etc
           prettier.enable = true;
         };
       };
     };
-
   };
 }
 
