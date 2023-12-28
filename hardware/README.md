@@ -45,4 +45,7 @@ Plus, some diodes - to ensure the board's button driving pin isn't shorted to th
 | 12Pin Screw Terminal | U1             | Through hole, 2.54mm  | ???                | ???                   | [Amazon](https://www.amazon.co.jp/gp/product/B07YBXQXXT)                                | Probably [LCSC](https://datasheet.lcsc.com/lcsc/2301061530_DORABO-DB125-2-54-12P-GN-S_C918129.pdf) |
 | ESP32-S2 Dev Board   | -              | -                     | Wemos              | S2 mini               | [Aliexpress](https://www.aliexpress.com/item/1005003145192016.html)                     | [Wemos](https://www.wemos.cc/en/latest/s2/s2_mini.html)                                            |
 
-[1]: The gate is in SOP-14 package, but there's a mistake on the PCB and the gate there is in SOIC-14 package. I was able to solder the gate onto SOIC-14, but that should be avoided in the future
+
+> [!IMPORTANT]  
+> [1]: The gate is in SOP-14 package, but there's a mistake on the PCB and the gate there is in SOIC-14 package. I was able to solder the gate onto SOIC-14, but that should be avoided in the future
+
