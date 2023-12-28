@@ -23,8 +23,9 @@ So, if we connect one of the AND gate's inputs to the button's "emitting" pin an
 ## PCB
 
 Because ESP32 couldn't keep up with 8 different signals combined into 10 different states, we decided to use hardware AND gates to reduce the load on ESP32.
-Resistors were used to pull down all the AND gate inputs to avoid "floating inputs."
-Plus, some diodes - to ensure the board's button driving pin isn't shorted to the ground or to the AND gate's output.
+Resistors were used to pull down all the AND gate inputs to avoid "floating inputs." Plus, some diodes - to ensure the board's button driving pin isn't shorted to the ground or to the AND gate's output.
+Schematics and PCB were designed using https://easyeda.com/
+</br>
 
 | Schematic                          | Top View                     | Bottom View                        |
 | ---------------------------------- | ---------------------------- | ---------------------------------- |
@@ -45,7 +46,5 @@ Plus, some diodes - to ensure the board's button driving pin isn't shorted to th
 | 12Pin Screw Terminal | U1             | Through hole, 2.54mm  | ???                | ???                   | [Amazon](https://www.amazon.co.jp/gp/product/B07YBXQXXT)                                | Probably [LCSC](https://datasheet.lcsc.com/lcsc/2301061530_DORABO-DB125-2-54-12P-GN-S_C918129.pdf) |
 | ESP32-S2 Dev Board   | -              | -                     | Wemos              | S2 mini               | [Aliexpress](https://www.aliexpress.com/item/1005003145192016.html)                     | [Wemos](https://www.wemos.cc/en/latest/s2/s2_mini.html)                                            |
 
-
 > [!IMPORTANT]  
 > [1]: The gate is in SOP-14 package, but there's a mistake on the PCB and the gate there is in SOIC-14 package. I was able to solder the gate onto SOIC-14, but that should be avoided in the future
-

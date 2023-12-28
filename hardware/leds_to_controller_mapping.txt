@@ -1,0 +1,116 @@
+Bottom section
+
+LED 1:
+    Child lock
+    - pin: 13
+    + pin: 14
+
+LED 2:
+    Slow fan
+    - pin: 13
+    + pin: 15
+
+LED 13:
+    Fast fan
+    - pin: 10
+    + pin: 14
+    
+LED 3:
+    Auto
+    - pin: 13
+    + pin: 16
+
+LED 4:
+    Night 
+    - pin: 13
+    + pin: 17
+
+LED 5:
+    Eco
+    - pin: 12
+    + pin: 14
+
+LED 6:
+    Ion
+    - pin: 12
+    + pin: 15
+
+------
+Middle left section
+
+LED 7:
+    2H
+    - pin: 12
+    + pin: 16
+
+
+LED 8:
+    6H
+    - pin: 12
+    + pin: 17
+
+------
+Top left section
+
+LED 17:
+    Square with diagonal shit
+    - pin: 21
+    + pin: 14
+
+LED 18:
+    Two tildas
+    - pin: 21
+    + pin: 15
+
+-----
+Middle right section
+
+LED 14:
+    Empty bucket
+    - pin: 10
+    + pin: 15
+
+LED 15:
+    25% bucket
+    - pin: 10
+    + pin: 16
+
+LED 16:
+    50% bucket
+    - pin: 10
+    + pin: 17
+
+LED 9:
+    Full bucket
+    - pin: 11
+    + pin: 14
+
+----
+Top right section
+
+LED 10:
+    Humidity Low
+    - pin: 11
+    + pin: 15
+
+LED 11:
+    Humidity Mid
+    - pin: 11
+    + pin: 16
+
+LED 12:
+    Humidity High
+    - pin: 11
+    + pin: 17
+
+----
+
+LED 20:
+    Not used
+    - pin: 21
+    + pin: 17
+
+LED 19:
+    Not used
+    - pin: 21
+    + pin: 16
