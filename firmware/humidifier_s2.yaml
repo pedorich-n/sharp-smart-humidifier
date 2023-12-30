@@ -22,17 +22,12 @@ esp32:
     type: esp-idf
     version: recommended
     sdkconfig_options:
-      CONFIG_ESP_INT_WDT: n # https://github.com/espressif/esp-idf/issues/8184#issuecomment-1526878804
-      CONFIG_ESP_TASK_WDT_EN: n
       CONFIG_ESP_CONSOLE_USB_CDC: y
 
 light:
   - platform: status_led
     name: "Status"
-    internal: true
-    pin:
-      number: GPIO15
-      inverted: true
+    output: out_ledc_status
 
 # web_server:
 #   port: 80
@@ -70,6 +65,15 @@ output:
   - platform: gpio
     pin: GPIO40
     id: out_sw2
+  - platform: ledc
+    id: out_ledc_status
+    frequency: "90Hz"
+    # Because of `inverted = true`, it's treated as `max_power = 0.2`
+    # See: https://github.com/esphome/esphome/blob/654e311/esphome/components/output/float_output.cpp#L36
+    min_power: 0.8
+    pin:
+      number: GPIO15
+      inverted: true
 
 button:
   - platform: output
