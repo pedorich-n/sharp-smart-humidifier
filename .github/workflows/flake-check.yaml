@@ -1,0 +1,16 @@
+name: Nix Flake Check
+on: push
+
+jobs:
+  nix-flake-check:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Install Nix
+        uses: cachix/install-nix-action@v25
+      - name: Flake Check
+        run: nix flake check
