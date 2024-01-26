@@ -47,6 +47,9 @@ sensor:
     name: "WiFi Signal"
     update_interval: 10s
 
+  - platform: internal_temperature
+    name: "Internal Temperature"
+
 text_sensor:
   - platform: debug
     reset_reason:
