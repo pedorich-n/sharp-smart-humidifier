@@ -68,7 +68,7 @@ static optional<OperatingMode> try_get_mode(std::string key) {
 
 template<typename T> class LastStateSeenTimes {
  public:
-  LastStateSeenTimes(uint32_t max_seen_times) : max_seen_times_(max_seen_times){};
+  LastStateSeenTimes(uint32_t max_seen_times) : max_seen_times_(max_seen_times) {};
 
   optional<T> get_last_state() { return this->last_state_; }
   uint32_t get_seen_times() { return this->seen_times_; };
