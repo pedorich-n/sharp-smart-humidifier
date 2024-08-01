@@ -6,6 +6,7 @@ wifi:
   password: !secret wifi_password
   fast_connect: true
   power_save_mode: none
+  use_address: humidifier-s2.lan
 
   # ap:
   #   ssid: ${friendly_name} Fallback AP
@@ -18,9 +19,12 @@ wifi:
 #      https://community.home-assistant.io/t/cant-stop-esphome-restarting-with-weak-wifi/453821/21
 
 ota:
-  safe_mode: true
+  platform: esphome
   port: 3232
   password: !secret ota_password
+
+safe_mode:
+  disabled: false
 
 debug:
   update_interval: 5s
