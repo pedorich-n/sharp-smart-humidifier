@@ -6,7 +6,7 @@ namespace operating_mode {
 
 static const char *const TAG = "sharp_hv_r75_operating_mode";
 
-void SharpHVR75OperatingMode::setup(){};
+void SharpHVR75OperatingMode::setup() {};
 
 float SharpHVR75OperatingMode::get_setup_priority() const { return setup_priority::DATA; };
 

@@ -6,8 +6,8 @@ namespace water_level {
 
 static const char *const TAG = "sharp_hv_r75_water_level";
 
-void SharpHVR75WaterLevelSensor::setup(){
-    // ESP_LOGCONFIG(TAG, "Setting up Sharp HV-R75 Water Level '%s'...", this->get_name().c_str());
+void SharpHVR75WaterLevelSensor::setup() {
+  // ESP_LOGCONFIG(TAG, "Setting up Sharp HV-R75 Water Level '%s'...", this->get_name().c_str());
 };
 
 float SharpHVR75WaterLevelSensor::get_setup_priority() const { return setup_priority::DATA; };
