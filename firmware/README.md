@@ -10,6 +10,6 @@
 
 </br>
 
-> [!IMPORTANT]  
-> Enabling fallback AP and/or Captive Portal causes ESPHome stability issues.
-> See: https://community.home-assistant.io/t/cant-stop-esphome-restarting-with-weak-wifi/453821/21
+## Device configuration
+
+See example use at https://github.com/pedorich-n/esphome-devices/tree/main/devices/sharp-hv-r75

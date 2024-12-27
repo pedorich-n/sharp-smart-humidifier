@@ -35,11 +35,9 @@
             export INSIDE_NIX_DEVELOP=true
             export ESPHOME_NOGITIGNORE=true
 
-            ${lib.getExe pkgs.python3} --version
-            ${lib.getExe pkgs.platformio-core} --version
-            echo "ESPHome $(${lib.getExe pkgs.esphome} version)"
-
-            eval "$(register-python-argcomplete esphome)"
+            python --version
+            platformio --version
+            echo "ESPHome $(esphome version)"
           '';
         };
       };
@@ -49,16 +47,6 @@
         flakeCheck = true;
 
         settings.formatter = {
-          just = {
-            command = pkgs.just;
-            options = [
-              "--fmt"
-              "--unstable"
-              "--justfile"
-            ];
-            includes = [ "justfile" ];
-          };
-
           black.options = [ "--line-length=120" ];
         };
 
@@ -78,6 +66,7 @@
 
           # YAML, etc
           prettier.enable = true;
+          just.enable = true;
         };
       };
     };
