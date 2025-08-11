@@ -3,7 +3,7 @@ import homeassistant.components.humidifier.const as humidifier_const
 DOMAIN = "sharp_smart_humidifier"
 
 CONF_NAME = "name"
-CONF_SWITCH_ID = "switch_id"
+CONF_ON_OFF_BUTTON_ID = "on_off_button_id"
 CONF_MODE_SELECTOR_ID = "mode_selector_id"
 CONF_CURRENT_HUMIDITY_ENTITY_ID = "current_humidity_entity_id"
 

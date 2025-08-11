@@ -3,7 +3,7 @@ from typing import Any, List
 
 import voluptuous as vol
 from homeassistant.components.humidifier import PLATFORM_SCHEMA, HumidifierDeviceClass, HumidifierEntity
-from homeassistant.const import SERVICE_SELECT_OPTION, SERVICE_TURN_OFF, SERVICE_TURN_ON
+from homeassistant.const import SERVICE_SELECT_OPTION, STATE_UNAVAILABLE, STATE_UNKNOWN
 from homeassistant.core import CALLBACK_TYPE, Event, EventStateChangedData, HomeAssistant, State, callback
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
@@ -15,7 +15,7 @@ from .const import (
     CONF_CURRENT_HUMIDITY_ENTITY_ID,
     CONF_MODE_SELECTOR_ID,
     CONF_NAME,
-    CONF_SWITCH_ID,
+    CONF_ON_OFF_BUTTON_ID,
     DEVICE_MODE_TO_HUMIDIFIER_MODE,
     FIXED_MAX_HUMIDITY,
     FIXED_MIN_HUMIDITY,
@@ -28,7 +28,7 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
         vol.Required(CONF_NAME): cv.string,
-        vol.Required(CONF_SWITCH_ID): cv.entity_id,
+        vol.Required(CONF_ON_OFF_BUTTON_ID): cv.entity_id,
         vol.Required(CONF_MODE_SELECTOR_ID): cv.entity_id,
         vol.Required(CONF_CURRENT_HUMIDITY_ENTITY_ID): cv.entity_id,
     }
@@ -62,7 +62,7 @@ class SharpSmartHumidifier(HumidifierEntity, RestoreEntity):
         self._attr_current_humidity = None
         self._attr_mode = None
 
-        self._switch_id = config[CONF_SWITCH_ID]
+        self._on_off_button_id = config[CONF_ON_OFF_BUTTON_ID]
         self._mode_selector_id = config[CONF_MODE_SELECTOR_ID]
         self._current_humidity_entity_id = config[CONF_CURRENT_HUMIDITY_ENTITY_ID]
 
@@ -78,7 +78,9 @@ class SharpSmartHumidifier(HumidifierEntity, RestoreEntity):
                 self._attr_mode = last_state.attributes["mode"]
 
         # Track state changes for all relevant entities
-        self._unsubscribe_listeners.append(async_track_state_change_event(self.hass, [self._switch_id], self._async_switch_state_changed))
+        self._unsubscribe_listeners.append(
+            async_track_state_change_event(self.hass, [self._on_off_button_id], self._async_on_off_state_changed)
+        )
         self._unsubscribe_listeners.append(
             async_track_state_change_event(self.hass, [self._mode_selector_id], self._async_mode_state_changed)
         )
@@ -95,7 +97,8 @@ class SharpSmartHumidifier(HumidifierEntity, RestoreEntity):
 
     # region: Callbacks
     @callback
-    def _async_switch_state_changed(self, event: Event[EventStateChangedData]) -> None:
+    def _async_on_off_state_changed(self, event: Event[EventStateChangedData]) -> None:
+        """Handle switch state changes."""
         new_state = event.data.get("new_state")
         if new_state is None:
             return
@@ -128,21 +131,29 @@ class SharpSmartHumidifier(HumidifierEntity, RestoreEntity):
     # region: Control Methods
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn the humidifier on."""
+        if self._attr_is_on:
+            _LOGGER.debug("Humidifier %s is already on", self._on_off_button_id)
+            return
+        
         try:
-            await self.hass.services.async_call("switch", SERVICE_TURN_ON, {"entity_id": self._switch_id}, blocking=True)
+            await self._press_on_off_button()
             self._attr_is_on = True
             self.async_write_ha_state()
         except Exception as err:
-            _LOGGER.error("Failed to turn on %s: %s", self._switch_id, err)
+            _LOGGER.error("Failed to turn on %s: %s", self._on_off_button_id, err)
 
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn the humidifier off."""
+        if not self._attr_is_on:
+            _LOGGER.debug("Humidifier %s is already off", self._on_off_button_id)
+            return
+        
         try:
-            await self.hass.services.async_call("switch", SERVICE_TURN_OFF, {"entity_id": self._switch_id}, blocking=True)
+            await self._press_on_off_button()
             self._attr_is_on = False
             self.async_write_ha_state()
         except Exception as err:
-            _LOGGER.error("Failed to turn off %s: %s", self._switch_id, err)
+            _LOGGER.error("Failed to turn off %s: %s", self._on_off_button_id, err)
 
     async def async_set_humidity(self, humidity: int) -> None:
         """Set target humidity (not supported - fixed at 50%)."""
@@ -173,12 +184,25 @@ class SharpSmartHumidifier(HumidifierEntity, RestoreEntity):
     # endregion: Control Methods
 
     # region: Private
-    def _update_switch_state(self, state: State) -> None:
-        if state is None:
-            return
+    async def _press_on_off_button(self) -> None:
+        """Press the on/off button to toggle the humidifier state."""
+        try:
+            await self.hass.services.async_call(
+                "button", "press", {"entity_id": self._on_off_button_id}, blocking=True
+            )
+            self._attr_is_on = not self._attr_is_on
+            self.async_write_ha_state()
+        except Exception as err:
+            _LOGGER.error("Failed to press on/off button %s: %s", self._on_off_button_id, err)
 
-        self._attr_is_on = state.state == "on"
-        self._attr_available = state.state not in ["unavailable", "unknown"]
+    def _update_switch_state(self, state: State) -> None:
+        if state.state is None or state in [STATE_UNKNOWN, STATE_UNAVAILABLE]:
+            self._attr_is_on = False
+            self._attr_available = False
+            return
+        
+        self._attr_is_on = not self._attr_is_on
+
 
     def _update_mode_state(self, state: State) -> None:
         if state.state not in DEVICE_MODE_TO_HUMIDIFIER_MODE:
@@ -189,7 +213,7 @@ class SharpSmartHumidifier(HumidifierEntity, RestoreEntity):
         self._attr_available = True
 
     def _update_humidity_state(self, state: State) -> None:
-        if state.state in ["unavailable", "unknown"]:
+        if state.state in [STATE_UNKNOWN, STATE_UNAVAILABLE]:
             self._attr_current_humidity = None
             return
 
@@ -202,7 +226,7 @@ class SharpSmartHumidifier(HumidifierEntity, RestoreEntity):
         """Init humidifier state based on tracked entities."""
 
         # Update power state from switch
-        switch_state = self.hass.states.get(self._switch_id)
+        switch_state = self.hass.states.get(self._on_off_button_id)
         if switch_state:
             self._update_switch_state(switch_state)
 
