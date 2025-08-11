@@ -1,6 +1,6 @@
 .esphome/
 secrets.yaml
-.venv
+**/.venv
 .direnv
 .mypy_cache
 .vscode
