@@ -1,8 +1,8 @@
 {
-  "$schema": "https://raw.githubusercontent.com/home-assistant/core/refs/heads/dev/script/json_schemas/manifest_schema.json",
   "domain": "sharp_smart_humidifier",
   "name": "Sharp HV-R75 Smart Humidifier",
+  "version": "0.1.0",
   "integration_type": "device",
   "iot_class": "local_push",
-  "dependencies": ["mqtt"]
+  "dependencies": ["mqtt"],
 }

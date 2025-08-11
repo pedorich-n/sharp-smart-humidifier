@@ -18,6 +18,7 @@ MODE_ECO = "Eco"
 MODE_FAN_SLOW = "Fan Slow"
 MODE_FAN_FAST = "Fan Fast"
 MODE_ION = "Ion"
+MODE_OFF = "Off"
 
 DEVICE_MODE_TO_HUMIDIFIER_MODE = {
     MODE_AUTO: humidifier_const.MODE_AUTO,
