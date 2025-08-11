@@ -66,7 +66,7 @@ void SharpHVR75OperatingMode::update() {
       ESP_LOGE(TAG, "Failed to detect operating mode for state %s for %i+ times!", store.to_string().c_str(),
                this->failed_to_compute_level_times_);
       this->status_set_error();
-      this->has_state_ = false;
+      this->set_has_state(false);
     } else {
       this->failed_to_compute_level_times_++;
       ESP_LOGI(TAG, "Failed to detect operating mode for state %s!", store.to_string().c_str());
