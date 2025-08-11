@@ -1,8 +1,8 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
-from esphome.components import sensor, text_sensor
+from esphome.components import text_sensor
 from esphome.components.sharp_hv_r75_common import DutyCycleSensor, sharp_hv_r75_ns
-from esphome.const import CONF_ID, ENTITY_CATEGORY_DIAGNOSTIC
+from esphome.const import ENTITY_CATEGORY_DIAGNOSTIC
 
 CONF_LED_MODE_AUTO = "sensor_mode_auto"
 CONF_LED_MODE_NIGHT = "sensor_mode_night"

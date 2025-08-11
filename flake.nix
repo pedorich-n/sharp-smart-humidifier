@@ -60,9 +60,9 @@
             projectRootFile = ".root";
             flakeCheck = true;
 
-            settings.formatter = {
-              black.options = [ "--line-length=120" ];
-            };
+            # settings.formatter = {
+            #   black.options = [ "--line-length=120" ];
+            # };
 
             programs = {
               # Nix
@@ -72,11 +72,12 @@
               clang-format.enable = true;
 
               # Python
-              black.enable = true;
-              isort = {
-                enable = true;
-                profile = "black";
-              };
+              # black.enable = true;
+              # isort = {
+              #   enable = true;
+              #   profile = "black";
+              # };
+              ruff.enable = true;
 
               # YAML, etc
               prettier.enable = true;
