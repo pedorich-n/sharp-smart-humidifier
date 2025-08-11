@@ -1,7 +1,7 @@
 [project]
 name = "sharp-smart-humidifier-component"
 version = "0.1.0"
-description = "Custom Home Assistant component for Sharp Smart Humidifier"
+description = "Custom Home Assistant component for Sharp HV-R75 Smart Humidifier"
 requires-python = ">=3.13"
 dependencies = []
 
